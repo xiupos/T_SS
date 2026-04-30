@@ -29,7 +29,7 @@ $$
 $$
 \begin{aligned}
   ∫_{T^2} dz d\=z e^{\frac{π i c_1}{\Im τ} z \Im z} ϑ\bmqty{a_1/c_1 \\ b_1}(c_1 z, c_1 τ) \pqty{e^{\frac{π i c_2}{\Im τ} z \Im z} ϑ\bmqty{a_2/c_2 \\ b_2}(c_2 z, c_2 τ)}^* \\
-  = \sqrt{\frac{\Im τ}{2c_1}} \exp\bqty{2πi \pqty{\frac{a_1b_1}{c_1} - \frac{a_2b_2}{c_2}}} δ_{c_1,c_2} δ_{a_1,a_2}^{({\rm mod}\ c_1)}.
+  = \sqrt{\frac{\Im τ}{2c_1}} \exp\bqty{2πi \frac{a_1}{c_1} (b_1 - b_2)} δ_{c_1,c_2} δ_{a_1,a_2}^{({\rm mod}\ c_1)}.
 \end{aligned}
 $$
 {#eq:theta_orthogonal}
@@ -50,6 +50,16 @@ $$
 $$
 を仮定している.
 
+T変換 $τ→τ+1$ は
+$$
+\begin{aligned}
+  ϑ \bmqty{a/c \\ b} (cz, c(τ+1))
+    &= e^{\frac{πi}{c}a(c-a)} ϑ \bmqty{a/c \\ b + a - c/2} (cz, c) \\
+    &= ∑_{a',b'} ∑_{m∈ℤ} e^{\frac{πi}{c}a'(c-a'+2m)} δ_{a,a'} δ_{b+a-\frac{c}{2}-m,b'} ϑ \bmqty{a'/c \\ b'} (cz, c).
+\end{aligned}
+$$
+{#eq:theta_t}
+
 ## 波動関数の性質 with SS phase
 
 フラックス $M$ の $j$-th ゼロモード, SS phase $(α_1,α_2)$ の波動関数は
@@ -69,7 +79,7 @@ $$
 
 積は, [@eq:theta_product] より
 $$
-ψ^{(j+α_1,α_2),M}(z,τ) × ψ^{(k+β_1,β_2),N}(z,τ)
+ψ^{(j+α_1,α_2),M}(z,τ) ⋅ ψ^{(k+β_1,β_2),N}(z,τ)
   = ∑_{m=0}^{P/d-1} Y_{j,k,α,β,m}^{M,N,P}(τ) ψ^{(j+k+mM+γ_1,γ_2),P}(z,τ),
 $$
 {#eq:wave_function_product}
@@ -83,8 +93,7 @@ $$
 直交性は, [@eq:theta_orthogonal] より
 $$
 \begin{aligned}
-  ∫_{T^2} dz d\=z ψ^{(j+α_1,α_2),M}(z,τ) \pqty{ψ^{(k+β_1,β_2),N}(z,τ)}^* = (\Im τ)^{-1/2} e^{2πi\pqty{\frac{(j+α_1)α_2}{M} - \frac{(k+β_1)β_2}{N}}} \\
-  × δ_{M,N} δ_{j+α_1,k+β_1}^{({\rm{mod}}\ M)}.
+  ∫_{T^2} dz d\=z ψ^{(j+α_1,α_2),M}(z,τ) \pqty{ψ^{(k+β_1,β_2),N}(z,τ)}^* = (\Im τ)^{-1/2} e^{2πi \frac{j+α_1}{M} (α_2-β_2)} δ_{M,N} δ_{j+α_1,k+β_1}^{({\rm{mod}}\ M)}.
 \end{aligned}
 $$
 {#eq:wave_function_orthogonal}
@@ -99,7 +108,7 @@ d^{(jα)(kβ)(ℓγ)}
   &= ∫_{T^2} dzd\=z ψ^{(j+α_1,α_2),M}(z,τ) ⋅ ψ^{(k+β_1,β_2),N}(z,τ) ⋅ \pqty{ψ^{(ℓ+γ_1,γ_2),P}(z,τ)}^* \\
   &= ∑_{m=0}^{(M+N)/d-1} Y_{j,k,α,β,m}^{M,N,(M+N)}(τ) \\
   & \qquad \qquad × ∫_{T^2} dzd\=z ψ^{(j+α_1+k+β_2+mM,α_2+β_2),(M+N)}(z,τ) \pqty{ψ^{(ℓ+γ_1,γ_2),P}(z,τ)}^* \\
-  &= ∑_{m=0}^{(M+N)/d-1} Y_{j,k,α,β,m}^{M,N,P}(τ) (\Im τ)^{-1/2} e^{2πi\pqty{\frac{(j+α_1+k+β_2+mM)(α_2+β_2)}{M+N} - \frac{(ℓ+γ_1)γ_2}{P}}} \\
+  &= ∑_{m=0}^{(M+N)/d-1} Y_{j,k,α,β,m}^{M,N,P}(τ) (\Im τ)^{-1/2} e^{2πi \frac{j+α_1+k+β_2+mM}{M+N} (α_2+β_2-γ_2)} \\
   & \qquad \qquad × δ_{M+N,P} δ_{(j+α_1)+(k+β_1)-(ℓ+γ_1),-mM}^{({\rm{mod}}\ M+N)}. \\
 \end{aligned}
 $$
@@ -119,8 +128,9 @@ $$
 $$
 の時で, これを満たす $m$ が存在する条件は, $\gcd(M+N,M)=\gcd(N,M)=d$ より
 $$
-(j+α_1)+(k+β_1) = (ℓ+γ_1) \mod \gcd(M, N)
+\boxed{(j+α_1)+(k+β_1) = (ℓ+γ_1) \mod \gcd(M, N)}
 $$
+{#eq:rule_jkl2}
 あるいは
 $$
 j + k - ℓ = - (α_1 + β_1 - γ_1) \mod \gcd(M, N)
@@ -130,7 +140,7 @@ $$
 
 ### T変換
 
-波動関数のT変換は, $m = M \mod 2$ を使って
+波動関数のT変換は,
 $$
 \begin{aligned}
   T:ψ^{(j+α_1,α_2),M}(z,τ)
@@ -156,13 +166,15 @@ $$
 
 ## SS phase $α_1,α_2 = 0, \frac12$ のとき
 
-### 境界条件の固有状態(?)
+### 境界条件を満たす基底
 
 3-point coupling ([@eq:yukawa]) が non-zero になる条件は[@eq:rule_SS; @eq:rule_jkl] の
 $$
-α_1 + β_1 = γ_1 \mod 1, \\
-α_2 + β_2 = γ_2 \mod 1, \\
-(j+α_1)+(k+β_1) = (ℓ+γ_1) \mod \gcd(M, N).
+\begin{gathered}
+  α_1 + β_1 = γ_1 \mod 1, \\
+  α_2 + β_2 = γ_2 \mod 1, \\
+  (j+α_1)+(k+β_1) = (ℓ+γ_1) \mod \gcd(M, N).
+\end{gathered}
 $$
 1つ目の条件を満たす $(α_1β_1γ_1)$ の組は $(000)$, $(0\frac12\frac12)$, $(\frac120\frac12)$, $(\frac12\frac120)$ の3通りのみで, その上で $α_2$, $β_2$ を適当に振ったときに制限を満たす項を持つのは以下の16通り.
 
@@ -174,7 +186,7 @@ $$
 | $(\frac120)$/$(\frac12\frac12)$ | $(\frac120)$/$(\frac12\frac12)$ | $(0γ_2)$ | 4 | $-1$ |
 : [@eq:rule_SS] を満たす SS phase の組み合わせと $jkℓ$ の条件([@eq:rule_jkl]). $γ_2$ は $α_2$, $β_2$ で一通りに決まる phase.
 
-### T変換の固有状態
+### T不変な基底
 
 #### $M = {\rm odd}$
 
@@ -394,7 +406,7 @@ $$
     &= ∑_{r=0}^{C'-1} ϑ\bmqty{\frac{\=r + \~A}{\=C'} \\ \~B'}(0, \=C''τ) × ϑ\bmqty{\frac{c_1r + A}{C} \\ B}(Cz, Cτ) \quad (∵s,t∈ℤ) \\
 \end{aligned}
 $$
-となって, 公式が得られる.
+となって, 公式が得られた.
 
 ## テータ関数の直交性の公式([@eq:theta_orthogonal])の証明
 
@@ -404,9 +416,9 @@ $$
   ({\rm LHS})
     &= ∫_{T^2} dz d\=z \exp\qty{\frac{π i}{\Im τ} (c_1z-c_2\=z) \Im z} ϑ\bmqty{a_1/c_1 \\ b_1}(c_1 z, c_1 τ) \overline{ϑ\bmqty{a_2/c_2 \\ b_2}(c_2 z, c_2 τ)} \\
     &= ∑_{n_1,n_2∈ℤ} ∫_{T^2} dz d\=z e^{\frac{π i}{\Im τ} (c_1z-c_2\=z) \Im z} \\
-    & \qquad \qquad × e^{πi \pqty{n_1 + \frac{a_1}{c_1}}^2 c_1τ} e^{2πi \pqty{n_1 + \frac{a_1}{c_1}}(c_1z + b_1)} × e^{-πi \pqty{n_2 + \frac{a_2}{c_2}}^2 c_2\=τ} e^{- 2πi \pqty{n_2 + \frac{a_2}{c_2}}(c_2\=z + b_2)} \\
+    & \qquad × e^{πi \pqty{n_1 + \frac{a_1}{c_1}}^2 c_1τ} e^{2πi \pqty{n_1 + \frac{a_1}{c_1}}(c_1z + b_1)} × e^{-πi \pqty{n_2 + \frac{a_2}{c_2}}^2 c_2\=τ} e^{- 2πi \pqty{n_2 + \frac{a_2}{c_2}}(c_2\=z + b_2)} \\
     &= e^{2πi \pqty{\frac{a_1b_1}{c_1} - \frac{a_2b_2}{c_2}}} ∑_{n_1,n_2∈ℤ} ∫_{T^2} dz d\=z e^{\frac{π i}{\Im τ} (c_1z-c_2\=z) \Im z + πi \bqty{\frac{(n_1c_1+a_1)^2}{c_1}τ - \frac{(n_2c_2+a_2)^2}{c_2}\=τ}} \\
-    & \qquad \qquad \qquad \qquad × e^{2πi[(n_1c_1+a_1)z - (n_2c_2+a_2)\=z] + 2πi (b_1 n_1 - b_2 n_2)} \\
+    & \qquad × e^{2πi[(n_1c_1+a_1)z - (n_2c_2+a_2)\=z] + 2πi (b_1 n_1 - b_2 n_2)} \\
 \end{aligned}
 $$
 ここで, $c_1≠c_2$ のとき, $z→z+1$ で指数関数の肩の第一項が不変でない($z$ 依存性が残る)から, 被積分関数がトーラス上で一価でない. したがって, $c_1 = c_2$ が要求され,
@@ -424,7 +436,7 @@ $$
     &= (\Im τ) e^{2πi \pqty{\frac{a_1b_1}{c_1} - \frac{a_2b_2}{c_2}}} δ_{c_1,c_2} ∑_{n_1,n_2∈ℤ} ∫_0^1 dx ∫_0^1 dy e^{- \frac{2π c_1}{\Im τ} (\Im τ)^2 y^2 + \frac{πi}{c_1} \bqty{(n_1c_1+a_1)^2τ - (n_2c_1+a_2)^2\=τ}} \\
     & \qquad \qquad \qquad \qquad \qquad × e^{2πi[(n_1c_1+a_1)(x+τy) - (n_2c_1+a_2)(x+\=τy)] + 2πi(b_1 n_1 - b_2 n_2)} \\
     &= (\Im τ) e^{2πi \pqty{\frac{a_1b_1}{c_1} - \frac{a_2b_2}{c_2}}} δ_{c_1,c_2} ∑_{n_1,n_2∈ℤ} ∫_0^1 dx e^{2πi[a_1 - a_2 + (n_1 - n_2)c_1]x} \\
-    & \qquad × ∫_0^1 dy e^{- \frac{2π c_1}{\Im τ} (\Im τ)^2 y^2 + 2πi[(n_1c_1+a_1)τ - (n_2c_1+a_2)\=τ]y + \frac{πi}{c_1} \bqty{(n_1c_1+a_1)^2τ - (n_2c_1+a_2)^2\=τ} + 2πi(b_1 n_1 - b_2 n_2)}. \\
+    & \quad × ∫_0^1 dy e^{- \frac{2π c_1}{\Im τ} (\Im τ)^2 y^2 + 2πi[(n_1c_1+a_1)τ - (n_2c_1+a_2)\=τ]y + \frac{πi}{c_1} \bqty{(n_1c_1+a_1)^2τ - (n_2c_1+a_2)^2\=τ} + 2πi(b_1 n_1 - b_2 n_2)}. \\
 \end{aligned}
 $$
 ここで $∫_0^1 dx e^{2πi(p-q)x} = δ_{p,q}$ (ただし $p-q∈ℤ$ を仮定)だから, $x$ 積分を実行して
@@ -436,12 +448,87 @@ $$
 \begin{aligned}
   ({\rm LHS})
     &= (\Im τ) e^{2πi \pqty{\frac{a_1b_1}{c_1} - \frac{a_2b_2}{c_2}}} δ_{c_1,c_2} ∑_{n_1,n_2∈ℤ} δ_{a_1, a_2 - (n_1 - n_2)c_1} \\
-    & \qquad × ∫_0^1 dy e^{- \frac{2π c_1}{\Im τ} (\Im τ)^2 y^2 + 2πi[(n_1c_1+a_1)τ - (n_2c_1+a_2)\=τ]y + \frac{πi}{c_1} \bqty{(n_1c_1+a_1)^2τ - (n_2c_1+a_2)^2\=τ} + 2πi(b_1 n_1 - b_2 n_2)} \\
+    & \quad × ∫_0^1 dy e^{- \frac{2π c_1}{\Im τ} (\Im τ)^2 y^2 + 2πi[(n_1c_1+a_1)τ - (n_2c_1+a_2)\=τ]y + \frac{πi}{c_1} \bqty{(n_1c_1+a_1)^2τ - (n_2c_1+a_2)^2\=τ} + 2πi(b_1 n_1 - b_2 n_2)} \\
     &= (\Im τ) e^{2πi \pqty{\frac{a_1b_1}{c_1} - \frac{a_2b_2}{c_2}}} δ_{c_1,c_2} ∑_{n_1,n_2∈ℤ} δ_{a_1, a_2 - (n_1 - n_2)c_1} \\
-    & \qquad × ∫_0^1 dy e^{- 2π c_1 (\Im τ) y^2 - 4π (\Im τ) (n_1c_1+a_1) y - \frac{2π}{c_1} (\Im τ) (n_1c_1+a_1)^2 + 2πi(b_1 n_1 - b_2 n_2)} \\
-    &= (\Im τ) e^{2πi \pqty{\frac{a_1b_1}{c_1} - \frac{a_2b_2}{c_2}}} δ_{c_1,c_2} ∑_{n_1,n_2∈ℤ} δ_{a_1, a_2 - (n_1 - n_2)c_1} ∫_0^1 dy e^{- 2π c_1 (\Im τ) \pqty{y + n_1 + \frac{a_1}{c_1}}^2 + 2πi(b_1 n_1 - b_2 n_2)} \\
-    &= (\Im τ) δ_{c_1,c_2} ∑_{n_1∈ℤ} δ_{a_1, a_2 - n_1c_1} e^{2πi(b_1 - b_2) \pqty{n_1 + \frac{a_1}{c_1}}} ∫_0^1 dy e^{- 2π c_1 (\Im τ) \pqty{y + n_1 + \frac{a_1}{c_1}}^2} \\
+    & \quad × ∫_0^1 dy e^{- 2π c_1 (\Im τ) y^2 - 4π (\Im τ) (n_1c_1+a_1) y - \frac{2π}{c_1} (\Im τ) (n_1c_1+a_1)^2 + 2πi(b_1 n_1 - b_2 n_2)} \\
+    &= (\Im τ) e^{2πi \pqty{\frac{a_1b_1}{c_1} - \frac{a_2b_2}{c_2}}} δ_{c_1,c_2} ∑_{n_1,n_2∈ℤ} δ_{a_1, a_2 - (n_1 - n_2)c_1} \\
+    & \quad × ∫_0^1 dy e^{- 2π c_1 (\Im τ) \pqty{y + n_1 + \frac{a_1}{c_1}}^2 + 2πi(b_1 n_1 - b_2 n_2)} \\
+    &= (\Im τ) δ_{c_1,c_2} ∑_{n_1,n_2∈ℤ} δ_{a_1, a_2 - (n_1 - n_2)c_1} e^{2πi(b_1 - b_2) \pqty{n_1 + \frac{a_1}{c_1}}} ∫_0^1 dy e^{- 2π c_1 (\Im τ) \pqty{y + n_1 + \frac{a_1}{c_1}}^2}. \\
 \end{aligned}
 $$
+ここで $m ≡ n_2 - n_1$ と置いて $n_2$ の総和を $m$ についての総和に直せば,
+$$
+∑_{n_1,n_2∈ℤ} δ_{a_1, a_2 - (n_1 - n_2)c_1} = ∑_{m∈ℤ} δ_{a_1, a_2 + mc_1}
+$$
+となって, これは $n_1$ によらない. これを $δ_{a_1,a_2}^{({\rm mod}\ c_1)}$ と書くことにする. また仮定より $b_1-b_2∈ℤ$ だから $e^{2πi(b_1 - b_2) n_1} = 1$. したがって,
+$$
+\begin{aligned}
+  ({\rm LHS})
+    &= (\Im τ) e^{2πi \frac{a_1}{c_1} (b_1 - b_2)} δ_{c_1,c_2} δ_{a_1,a_2}^{({\rm mod}\ c_1)} ∑_{n_1∈ℤ} ∫_0^1 dy e^{- 2π c_1 (\Im τ) \pqty{y + n_1 + \frac{a_1}{c_1}}^2}. \\
+\end{aligned}
+$$
+最後に $∑_{n_1∈ℤ} ∫_0^1 dy f(y+n_1) = ∫_{-∞}^{∞} dy f(y)$ に注意して $y$ 積分を実行すれば,
+$$
+\begin{aligned}
+  ({\rm LHS})
+    &= (\Im τ) e^{2πi \frac{a_1}{c_1} (b_1 - b_2)} δ_{c_1,c_2} δ_{a_1,a_2}^{({\rm mod}\ c_1)} ∫_{-∞}^{∞} dy e^{- 2π c_1 (\Im τ) \pqty{y + \frac{a_1}{c_1}}^2} \\
+    &= (\Im τ) e^{2πi \frac{a_1}{c_1} (b_1 - b_2)} δ_{c_1,c_2} δ_{a_1,a_2}^{({\rm mod}\ c_1)} \frac1{\sqrt{2c_1 \Im τ}} \\
+    &= \sqrt{\frac{\Im τ}{2c_1}} e^{2πi \frac{a_1}{c_1} (b_1 - b_2)} δ_{c_1,c_2} δ_{a_1,a_2}^{({\rm mod}\ c_1)} \\
+\end{aligned}
+$$
+となって右辺が得られた.
 
-TODO: wip
+## テータ関数のT変換 ([@eq:theta_t]) の証明
+
+左辺を定義で展開して
+$$
+\begin{aligned}
+  ({\rm LHS})
+    &= ∑_{ℓ∈ℤ} e^{πi\pqty{ℓ+\frac{a}{c}}^2 c(τ+1)} e^{2πi \pqty{ℓ+\frac{a}{c}}(cz+b)} \\
+    &= ∑_{ℓ∈ℤ} e^{πi\pqty{ℓ+\frac{a}{c}}^2 c} e^{πi\pqty{ℓ+\frac{a}{c}}^2 cτ} e^{2πi \pqty{ℓ+\frac{a}{c}}(cz+b)}. \\
+\end{aligned}
+$$
+一つ目の指数関数の肩を変形して,
+$$
+\begin{aligned}
+  \exp\bqty{πi\pqty{ℓ+\frac{a}{c}}^2 c}
+    &= \exp\bqty{πi\pqty{ℓ^2 + 2ℓ\frac{a}{c} + \frac{a^2}{c^2}} c} \\
+    &= \exp\bqty{πicℓ(ℓ+1) + 2πiℓ\pqty{a - \frac{c}{2}} + πi\frac{a^2}{c}} \\
+    &= \exp\bqty{πicℓ(ℓ+1) + 2πi\pqty{ℓ + \frac{a}{c}}\pqty{a - \frac{c}{2}} + \frac{πi}{c}a(c-a)}. \\
+\end{aligned}
+$$
+ここで, $ℓ(ℓ+1)$ は必ず偶数だから落ちる. したがって,
+$$
+\begin{aligned}
+  ({\rm LHS})
+    &= e^{\frac{πi}{c}a(c-a)} ∑_{ℓ∈ℤ} e^{πi\pqty{ℓ+\frac{a}{c}}^2 c} e^{πi\pqty{ℓ+\frac{a}{c}}^2 cτ} e^{2πi \pqty{ℓ+\frac{a}{c}}\pqty{cz+b+a-\frac{c}{2}}} \\
+    &= e^{\frac{πi}{c}a(c-a)} ϑ\bmqty{a/c \\ b + a - c/2}(cz,cτ) \\
+\end{aligned}
+$$
+となって1行目の右辺が得られる.
+
+$a$, $b$ を離散的と仮定する. ある $n$ で等分割して, $(a,b) = (p/n,q/n)$ ($p,q=0,1,...,n-1$) と書くと,
+$$
+\begin{aligned}
+  ({\rm LHS})
+    &= e^{\frac{πi}{c}\frac{p}{n}\pqty{c-\frac{p}{n}}} ϑ\bmqty{\frac{p/n}{c} \\ q/n + p/n - c/2}(cz,cτ) \\
+    &= ∑_{p',q'∈ℤ} δ_{\frac{p}{n},\frac{p'}{n}} δ_{\frac{q}{n},\frac{q'}{n} - \frac{p'}{n} + \frac{c}{2}} e^{\frac{πi}{c}\frac{p'}{n}\pqty{c-\frac{p'}{n}}} ϑ\bmqty{\frac{p'/n}{c} \\ q'/n}(cz,cτ). \\
+\end{aligned}
+$$
+ここで, $p$ に関する Kronecker のデルタから $p'$ の総和は $p'=0,1,...,n-1$ の範囲しか寄与しない. また, $q' = q'' + mn$ ($q'' = 0,1,...,n-1$) と置換して,
+$$
+\begin{aligned}
+  ({\rm LHS})
+    &= ∑_{p',q''=0}^{n-1} ∑_{m∈ℤ} δ_{\frac{p}{n},\frac{p'}{n}} δ_{\frac{q}{n},\frac{q''}{n} + m - \frac{p'}{n} + \frac{c}{2}} e^{\frac{πi}{c}\frac{p'}{n}\pqty{c-\frac{p'}{n}}} ϑ\bmqty{\frac{p'/n}{c} \\ q''/n + m}(cz,cτ) \\
+    &= ∑_{p',q''=0}^{n-1} ∑_{m∈ℤ} δ_{\frac{p}{n},\frac{p'}{n}} δ_{\frac{q}{n},\frac{q''}{n} + m - \frac{p'}{n} + \frac{c}{2}} e^{\frac{πi}{c}\frac{p'}{n}\pqty{c-\frac{p'}{n}}} e^{2πi\frac{p'/n}{c}m} ϑ\bmqty{\frac{p'/n}{c} \\ q''/n}(cz,cτ) \\
+    &= ∑_{p',q''=0}^{n-1} ∑_{m∈ℤ} δ_{\frac{p}{n},\frac{p'}{n}} δ_{\frac{q}{n},\frac{q''}{n} + m - \frac{p'}{n} + \frac{c}{2}} e^{\frac{πi}{c}\frac{p'}{n}\pqty{c-\frac{p'}{n} + 2m}} ϑ\bmqty{\frac{p'/n}{c} \\ q''/n}(cz,cτ). \\
+\end{aligned}
+$$
+$(a',b') = (p'/n,q''/n)$ と書くことにすれば,
+$$
+\begin{aligned}
+  ({\rm LHS})
+    &= ∑_{a',b'} ∑_{m∈ℤ} δ_{a,a'} δ_{b,b' - a' + \frac{c}{2} + m} e^{\frac{πi}{c}a'\pqty{c - a' + 2m}} ϑ\bmqty{a'/c \\ b'}(cz,cτ) \\
+\end{aligned}
+$$
+となって2行目の右辺が得られる.
